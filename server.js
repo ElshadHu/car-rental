@@ -22,7 +22,9 @@ const HTTP_PORT = process.env.PORT || 8080;
 
 const express = require("express");
 const app = express();
-app.use(express.static("public")); // css files
+app.set('views', __dirname + '/views');
+app.use(express.static(__dirname + '/public'));
+
 app.set("view engine", "ejs"); //ejs
 app.use(express.urlencoded({ extended: true })); //forms
 
