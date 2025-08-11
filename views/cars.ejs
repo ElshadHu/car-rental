@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+
+  <body>
+    <div class="container mx-auto">
+      <!-- menu -->
+      <div class="navbar bg-base-100 my-6">
+        <div class="flex-1">
+          <a class="btn btn-ghost text-xl" href="/cars">Rent a Car</a>
+        </div>
+        <div class="flex-none">
+          <a class="btn btn-neutral" href="/logout">Logout</a>
+        </div>
+      </div>
+
+      <!-- main content -->
+      <div class="grid grid-cols-3 gap-4 mt-6">
+        <% carList.forEach((vehicle)=>{ %>
+        <div class="card bg-base-100 w-96 shadow-xl card-bordered">
+          <figure>
+            <img src="<%=vehicle.imageUrl%>" alt="<%=vehicle.model%>" />
+            <!-- <img src="https://fastly.clutch.ca/e91e8596-e17c-46ab-84df-cdf27422fb0b.jpg"/> -->
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title"><%=vehicle.model%></h2>
+            <!--     <h2 class="card-title">Honda Civic</h2>-->
+            <p>Click the button to book this car</p>
+            <div class="card-actions justify-end">
+              <%if(!vehicle.returnDate) {%>
+              <a href="/cars/<%= vehicle._id%>/book" class="btn btn-primary"
+                >Book</a
+              >
+              <% }else if ( vehicle.rentedBy && ((vehicle.rentedBy._id &&
+              vehicle.rentedBy._id.equals(currentUserId)) ) ) { %>
+              <form action="/cars/<%= vehicle._id %>/return" method="POST">
+                <button class="btn btn-warning" type="submit">Return</button>
+              </form>
+              <% } else { %>
+              <p>Booked</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+</html>
